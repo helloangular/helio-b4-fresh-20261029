@@ -1,0 +1,43 @@
+# r143 browser test fixture: TC-104 b pipeline. Nothing is deployed and no secret is used.
+name: b4-tc104-b-s5t104b
+run-name: ${{ inputs.helio_execution_id || github.run_id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        required: false
+        default: b4-fresh-test
+        options: [b4-fresh-test]
+      helio_execution_id:
+        type: string
+        required: false
+        default: ''
+      helio_release_id:
+        type: string
+        required: false
+        default: ''
+      workflow_revision:
+        type: string
+        required: false
+        default: ''
+      release_version:
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: b4-fresh-test
+    steps:
+      - name: Synthetic work
+        shell: bash
+        run: |
+          echo "b4-tc104-b-s5t104b run=$GITHUB_RUN_ID attempt=$GITHUB_RUN_ATTEMPT"
+          sleep 20
